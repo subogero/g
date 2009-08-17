@@ -7,10 +7,10 @@
 
 CMD=`which $1` 2>/dev/null
 #echo Command found: $CMD
-if   [ $# -eq 0    ]; then ################ No argument, open terminal #######
+if   [ $# -eq 0    ]; then   ############## No argument, open terminal #######
   #echo "TERMINAL"
   gnome-terminal;
-elif [ "$1" = "-h" ]; then {
+elif [ "$1" = "-h" ]; then { ############## Display usage ####################
   #echo "HELP"
   echo 'Usage: go [-h] | [URL] | [command [options]]';
   echo;
@@ -19,17 +19,18 @@ elif [ "$1" = "-h" ]; then {
   echo 'go <URL>     opens URL with the preferred app in a new window';
   echo 'go <command> runs the command in a new window'
 }
-elif [ "$CMD" = "" ]; then ################ Argument is URL, open ############
+elif [ "$CMD" = "" ]; then   ############## Argument is URL, open ############
   #echo "URL"; 
   gnome-open $1;
-else                       ################ Argument is command ##############
+else                         ############## Argument is command ##############
   #echo COMMAND
+  COMMAND=$1
   shift # Command parameters into $@
   # Detect GTK+ programs: Compiled        Python          Perl
   strings $CMD | grep -e 'libgtk-x11' -e 'import gtk' -e 'use Gtk2' >/dev/null 2>&1
-  if [ $? -eq 0 ]; then    ################ Command uses GTK, start ##########
+  if [ $? -eq 0 ]; then      ############## Command uses GTK, start ##########
     $CMD $@ 2>/dev/null & disown 2>/dev/null;
-  else                     ################ Command started in terminal ######
-    gnome-terminal -e $CMD $@ >/dev/null 2>&1
+  else                       ############## Command started in terminal ######
+    gnome-terminal -t $COMMAND -e $CMD $@ >/dev/null 2>&1
   fi
 fi
