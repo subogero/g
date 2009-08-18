@@ -26,11 +26,16 @@ else                         ############## Argument is command ##############
   #echo COMMAND
   COMMAND=$1
   shift # Command parameters into $@
-  # Detect GTK+ programs: Compiled        Python          Perl
-  strings $CMD | grep -e 'libgtk-x11' -e 'import gtk' -e 'use Gtk2' >/dev/null 2>&1
+  # Detect X/GTK+ programs: Compiled X/GTK, Python, Perl
+  strings $CMD | grep -e 'libXaw3d'   \
+                      -e 'libgtk-x11' \
+                      -e 'import gtk' \
+                      -e 'use Gtk2'   \
+                      >/dev/null 2>&1
   if [ $? -eq 0 ]; then      ############## Command uses GTK, start ##########
     $CMD $@ 2>/dev/null & disown 2>/dev/null;
   else                       ############## Command started in terminal ######
     gnome-terminal -t $COMMAND -e $CMD $@ >/dev/null 2>&1
   fi
 fi
+
