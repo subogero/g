@@ -44,12 +44,13 @@ release: commit $(TARBALL)
 
 # Commit to git repository
 commit: clean
-	@git tag
-	@echo Please Enter git tag name:
-	@read TAG
-	@git commit -a
-	@echo Adding git tag $$TAG
-	@git tag -a `echo $$TAG` HEAD
+	@git tag;\
+	echo Please Enter git tag name:;\
+	export TAG;\
+	read TAG;\
+	echo Adding git tag $$TAG;\
+	git commit -a;\
+	git tag -a `echo $$TAG` HEAD
 
 $(TARBALL): *
 	7z a $(TARBALL:.tar.gz=.tar) *
