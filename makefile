@@ -48,7 +48,8 @@ commit: clean
 	@echo Please Enter git tag name:
 	@read TAG
 	@git commit -a
-	@git tag -a `echo $(TAG)` HEAD
+	@echo $TAG
+	@git tag -a `echo $TAG` HEAD
 
 $(TARBALL): *
 	7z a $(TARBALL:.tar.gz=.tar) *
