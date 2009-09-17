@@ -34,6 +34,7 @@ else
                           -e 'libgtk-x11' \
                           -e 'import gtk' \
                           -e 'use Gtk2'   \
+                          -e 'run-mozilla.sh' \
                           >/dev/null 2>&1
 
   ### Command uses GTK, start ################################################
