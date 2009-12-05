@@ -35,6 +35,7 @@ else
                           -e 'import gtk' \
                           -e 'use Gtk2'   \
                           -e 'run-mozilla.sh' \
+                          -e 'tkwait' \
                           >/dev/null 2>&1
 
   ### Command uses GTK, start ################################################
