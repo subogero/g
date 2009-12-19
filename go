@@ -36,6 +36,8 @@ else
                           -e 'use Gtk2'   \
                           -e 'run-mozilla.sh' \
                           -e 'tkwait' \
+                          -e 'MainLoop' \
+                          -e 'mainloop' \
                           >/dev/null 2>&1
 
   ### Command uses GTK, start ################################################
