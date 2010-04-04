@@ -4,11 +4,10 @@
 # Free software, distributed under the GNU GPL license
 # There is absolutely no warranty.
 ##############################################################################
-
 CMDFILE=`which $1` 2>/dev/null
 
 ### No argument, open terminal ###############################################
-if   [ $# -eq 0    ]; then
+if [ $# -eq 0 ]; then
   gnome-terminal;
 
 ### Display usage ############################################################
@@ -22,7 +21,7 @@ elif [ "$1" = "-h" ]; then
 
 ### Argument is URL, open ####################################################
 elif [ "$CMDFILE" = "" ]; then
-  gnome-open $1;
+  gnome-open "$@";
 
 ### Argument is command ######################################################
 else
@@ -40,11 +39,11 @@ else
                           -e 'mainloop' \
                           >/dev/null 2>&1
 
-  ### Command uses GTK, start ################################################
+  ### Command seems to be X-program ##########################################
   if [ $? -eq 0 ]; then
     $CMD $@ 2>/dev/null & disown 2>/dev/null;
 
-  ### Command started in terminal ############################################
+  ### Command seems to be terminal-program ###################################
   else
     gnome-terminal -t $CMD -e $CMDFILE $@ >/dev/null 2>&1;
   fi;
