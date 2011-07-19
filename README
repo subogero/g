@@ -1,0 +1,11 @@
+go is a universal command-line launcher for GNOME.
+Much like gnome-open, but it can launch programs as well.
+Always in a new window, always fully detached from your terminal.
+
+$ go             # launch a new gnome-terminal window
+$ go <file>      # open <file> in your preferred application
+$ go <URL>       # open <URL> in your preferred application
+$ go <CLI-prog>  # launch command-line program in a new gnome-terminal
+$ go <GUI=prog>  # launch GUI program
+$ google <words> # launch google search for <words> in default browser
+
