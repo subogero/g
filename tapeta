@@ -4,7 +4,7 @@ cat <<EOF
 Usage: tapeta [-h]
 -h show this help text
 
-Tipically, use tapeta as a Startup Application in Gnome.
+Tipically, use tapeta as a Startup Application in Gnome/Mate.
 
 Config file ~/.tapeta is read for cycle period [s] and the folder
 with the wallpaper pictures to cycle.
@@ -26,8 +26,13 @@ fi
 while true; do
   SLEEP=`sed -rn 's/^t=([0-9]+)$/\1/p' ~/.tapeta`
   DIR=`sed -rn 's/^dir=(.+)$/\1/p' ~/.tapeta`
-  sleep $SLEEP
+  [ "$SLEEP" = 0 ] && exit 0
+  sleep $SLEEP || exit 1
   FILE=`ls -1 --file-type "$DIR" | grep '[^/]$' | shuf -n1`
-  [ -z "$FILE" ] && continue # Safety check for any regular files in folder
-  gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$DIR/$FILE"
+  [ -z "$FILE" ] && continue
+  if ps -A | grep '\bmdm\b' >/dev/null; then
+    mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$DIR/$FILE"
+  else
+    gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$DIR/$FILE"
+  fi
 done

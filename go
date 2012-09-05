@@ -6,9 +6,19 @@
 ##############################################################################
 CMDFILE=`which $1` 2>/dev/null
 
+### Which desktop environment is this? #######################################
+if ps -A | grep '\bmdm\b' >/dev/null; then
+  DE=mate
+elif ps -A | grep '\bgdm\b' >/dev/null; then
+  DE=gnome
+else
+  echo Unknown desktop environment 1>&2
+  exit 1
+fi
+
 ### No argument, open terminal ###############################################
 if [ $# -eq 0 ]; then
-  gnome-terminal;
+  $DE-terminal;
 
 ### Display usage ############################################################
 elif [ "$1" = "-h" ]; then
@@ -21,7 +31,7 @@ elif [ "$1" = "-h" ]; then
 
 ### Argument is URL, open ####################################################
 elif [ "$CMDFILE" = "" ]; then
-  gnome-open "$@";
+  $DE-open "$@";
 
 ### Argument is command ######################################################
 else
@@ -45,6 +55,6 @@ else
 
   ### Command seems to be terminal-program ###################################
   else
-    gnome-terminal -t $CMD -e $CMDFILE $@ >/dev/null 2>&1;
+    $DE-terminal -t $CMD -e $CMDFILE $@ >/dev/null 2>&1;
   fi;
 fi

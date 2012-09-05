@@ -9,4 +9,4 @@ for WORD in "$@"; do
   QUERY="${QUERY}${WORD}+";
 done
 URL="http://www.google.com/search?q=${QUERY}"
-gnome-open $URL
+go $URL
