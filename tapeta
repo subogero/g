@@ -1,0 +1,33 @@
+#!/bin/sh
+if [ "$1" = -h ]; then
+cat <<EOF
+Usage: tapeta [-h]
+-h show this help text
+
+Tipically, use tapeta as a Startup Application in Gnome.
+
+Config file ~/.tapeta is read for cycle period [s] and the folder
+with the wallpaper pictures to cycle.
+The config file is read periodically, so settings can be altered on the fly.
+
+A default config file is created first time with a cycle time of 10 min
+and ~/Pictures as the default folder.
+EOF
+exit 0
+fi
+
+# Create default cnfig file if necessary
+if [ ! -f ~/.tapeta ]; then
+  echo t=600 > ~/.tapeta
+  echo dir=/home/$USER/Pictures >> ~/.tapeta
+fi
+
+# Cycle through pictures
+while true; do
+  SLEEP=`sed -rn 's/^t=([0-9]+)$/\1/p' ~/.tapeta`
+  DIR=`sed -rn 's/^dir=(.+)$/\1/p' ~/.tapeta`
+  sleep $SLEEP
+  FILE=`ls -1 --file-type "$DIR" | grep '[^/]$' | shuf -n1`
+  [ -z "$FILE" ] && continue # Safety check for any regular files in folder
+  gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$DIR/$FILE"
+done
