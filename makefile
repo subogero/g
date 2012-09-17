@@ -9,8 +9,9 @@
 
 # Target and sources
 TARGET1 := go
-TARGET3 := tapeta
+TARGET2 := tapeta
 MANPAGE1:= go.1.gz
+MANPAGE2:= tapeta.1.gz
 BIN     := /usr/bin
 MAN     := /usr/share/man/man1
 TARBALL := go.tar.gz
@@ -21,15 +22,17 @@ TARBALL := go.tar.gz
 # Install to $(BIN) and man page to $(MAN)
 install:
 	cp -f $(TARGET1) $(BIN)
-	cp -f $(TARGET3) $(BIN)
+	cp -f $(TARGET2) $(BIN)
 	cp -f $(MANPAGE1) $(MAN)
+	cp -f $(MANPAGE2) $(MAN)
 
 # Run "sudo make uninstall" to uninstall
 # Uninstall from $(BIN) and man page from $(MAN)
 uninstall:
 	rm -f $(BIN)/$(TARGET1)
-	rm -f $(BIN)/$(TARGET3)
+	rm -f $(BIN)/$(TARGET2)
 	rm -f $(MAN)/$(MANPAGE1)
+	rm -f $(MAN)/$(MANPAGE2)
 
 # Remove backup files
 clean:
