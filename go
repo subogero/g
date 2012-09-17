@@ -38,11 +38,11 @@ elif [ "$1" = "-g" ]; then
     QUERY="${QUERY}${WORD}+";
   done
   URL="http://www.google.com/search?q=${QUERY}"
-  xdg-open $URL
+  $DE-open $URL
 
 ### Argument is URL, open ####################################################
 elif [ "$CMDFILE" = "" ]; then
-  xdg-open "$@";
+  $DE-open "$@";
 
 ### Argument is command ######################################################
 else
