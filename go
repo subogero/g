@@ -26,12 +26,23 @@ elif [ "$1" = "-h" ]; then
   echo
   echo 'go           opens a new detached terminal window'
   echo 'go -h        shows usage (this text) and exits'
+  echo 'go -g <text> Google search for text in your preferred browser'
   echo 'go <URL>     opens URL with the preferred app in a new window'
   echo 'go <command> runs the command in a new window';
 
+### Argument is Google search ################################################
+elif [ "$1" = "-g" ]; then
+  shift
+  QUERY=""
+  for WORD in "$@"; do
+    QUERY="${QUERY}${WORD}+";
+  done
+  URL="http://www.google.com/search?q=${QUERY}"
+  xdg-open $URL
+
 ### Argument is URL, open ####################################################
 elif [ "$CMDFILE" = "" ]; then
-  $DE-open "$@";
+  xdg-open "$@";
 
 ### Argument is command ######################################################
 else
