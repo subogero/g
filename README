@@ -1,11 +1,16 @@
+A collection of goodies for the Gnome2 desktop and its relations.
+
 go is a universal command-line launcher for GNOME.
 Much like gnome-open, but it can launch programs as well.
 Always in a new window, always fully detached from your terminal.
-
-$ go             # launch a new gnome-terminal window
+$ go             # launch a new terminal window
 $ go <file>      # open <file> in your preferred application
 $ go <URL>       # open <URL> in your preferred application
-$ go <CLI-prog>  # launch command-line program in a new gnome-terminal
-$ go <GUI=prog>  # launch GUI program
-$ google <words> # launch google search for <words> in default browser
+$ go <CLI-prog>  # launch command-line program in a new terminal
+$ go <GUI-prog>  # launch GUI program
+$ go -g <words>  # launch google search for <words> in default browser
 
+tapeta is a simple wallpaper slideshow program.
+notgmail provides desktop notifications for new email on Gmail.
+
+Use both tapeta and notgmail as Startup Applications.
