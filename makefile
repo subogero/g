@@ -8,15 +8,15 @@
 ####### Macros #######
 
 # Target and sources
-TARGET1 := go
+TARGET1 := g
 TARGET2 := tapeta
 TARGET3 := notgmail
-MANPAGE1:= go.1
+MANPAGE1:= g.1
 MANPAGE2:= tapeta.1
 MANPAGE3:= notgmail.1
 BIN     := /usr/bin
 MAN     := /usr/share/man/man1
-TARBALL := go.tar.gz
+TARBALL := g.tar.gz
 
 ####### Rules ########
 
