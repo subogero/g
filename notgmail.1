@@ -1,0 +1,44 @@
+.TH NOTGMAIL 1 "Distributed under GNU GPL" "(c) SZABO Gergely"
+.SH NAME
+notgmail \- New mail desktop notification for Gmail
+.SH SYNOPSIS
+.B notgmail
+[
+.B <time>
+] | [
+.B -h
+]
+.SH DESCRIPTION
+.B Notgmail
+provides new mail desktop notification from Gmail for the
+.B Gnome2 MATE XFCE
+desktop environments.
+.PP
+Tipically, use notgmail as a Startup Application.
+.PP
+The Gmail atom feed is read periodically, with the timeout specified on the
+command line in [s].
+.SH FILES
+Your google.com credentials are read from
+.BR "~/.netrc" " or"
+.BR "~/.muttrc" .
+.SH SEE ALSO
+.BR "notify-send" " Send desktop notifications from the command line"
+.br
+Note: notify-send is broken in LXDE and Gnome3, and it does not exist in KDE.
+.SH AUTHOR
+SZABO Gergely
+.B szg@subogero.com
+.br
+Homepage:
+.B http://linux.subogero.com/go
+.SH COPYRIGHT
+This is Free software, distributed under the GNU GPL license.
+.br
+There is absolutely no warranty.
+.SH BUG REPORTS
+Please report bugs to the above address.
+.br
+Please include
+.B notgmail
+in the Subject field.

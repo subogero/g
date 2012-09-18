@@ -1,0 +1,109 @@
+.TH GO 1 "Distributed under GNU GPL" "(c) SZABO Gergely"
+.SH NAME
+go \- GNOME command-line launcher
+.SH SYNOPSIS
+.B go
+[
+.B -h
+] |
+[
+.B URL
+] |
+[
+.B command
+[
+.B options
+] ]
+.SH DESCRIPTION
+.B Go
+is a general purpose command-line launcher for the
+.B Gnome
+desktop environment in the style of
+.BR gnome-open .
+Unlike
+.B gnome-open
+however, it can not only launch files/URLs in the preferred application,
+but commands/programs as well. The launching mechanism is identical
+in every case:
+.br
+\- the launched application runs in a new window
+.br
+\- the terminal is not blocked while the application is running
+.br
+\- closing the terminal does not kill the launched application
+.PP
+.B Go
+usage:
+.br
+- go           launches a new terminal window
+.br
+- go -h        shows usage and exits
+.br
+- go -g <text> Google search for text in your preferred browser
+.br
+- go <URL>     opens URL with the preferred application in a new window
+.br
+- go <command> runs the command in a new window
+.PP
+The launched command can be a terminal- or a GTK-application.
+.B Go
+will try to decide which one, based on the strings found in the command file.
+If the GTK-related strings are not found, the command is launched
+using the
+.B gnome-terminal
+command, otherwise with a simple
+.B command & disown
+mechanism.
+The following strings are searched for:
+.br
+\-
+.BR "libXaw3d" "       usually found in compiled X programs"
+.br
+\-
+.BR "libgtk-x11" "     usually found in compiled GTK programs"
+.br
+\-
+.BR "import gtk" "     usually found in Python interpreter scripts"
+.br
+\-
+.BR "use Gtk2" "       usually found in Perl interpreter scripts"
+.br
+\-
+.BR "run-mozilla.sh" " usually found in Thunderbird"
+.br
+\-
+.BR "tkwait" "         usually found in tcl/tk scripts"
+.SH SEE ALSO
+.BR gnome-open (1)
+.br
+.BR gnome-terminal (1)
+.br
+.BR bash "(1) job-control"
+.SH AUTHOR
+SZABO Gergely
+.B mailto:sub.o.gero@gmail.com
+.br
+Homepage:
+.B http://linux.subogero.com/go
+.SH COPYRIGHT
+This is Free software, distributed under the GNU GPL license.
+.br
+There is absolutely no warranty.
+.SH BUG REPORTS
+Please report bugs to the above address.
+.br
+Please include
+.B go
+in the Subject field.
+Patches are welcome!
+.SH BUGS
+There seems to be no fundamental mechanism to differentiate
+terminal- and X11-applications, as even while creating
+Gnome panel- or desktop launchers, you have to specify
+whether it's an `Application' or `Application in Terminal'.
+.PP
+Therefore I expect most problems with the detection of X11-applications,
+as the list of searched strings in commands should be extended to detect
+more interpreter-script types and different graphical tool-kits 
+(GTK, QT, etc).
+

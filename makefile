@@ -11,9 +11,9 @@
 TARGET1 := go
 TARGET2 := tapeta
 TARGET3 := notgmail
-MANPAGE1:= go.1.gz
-MANPAGE2:= tapeta.1.gz
-MANPAGE3:= notgmail.1.gz
+MANPAGE1:= go.1
+MANPAGE2:= tapeta.1
+MANPAGE3:= notgmail.1
 BIN     := /usr/bin
 MAN     := /usr/share/man/man1
 TARBALL := go.tar.gz
@@ -27,8 +27,11 @@ install:
 	cp -f $(TARGET2) $(BIN)
 	cp -f $(TARGET3) $(BIN)
 	cp -f $(MANPAGE1) $(MAN)
+	gzip --best $(MAN)/$(MANPAGE1)
 	cp -f $(MANPAGE2) $(MAN)
+	gzip --best $(MAN)/$(MANPAGE2)
 	cp -f $(MANPAGE3) $(MAN)
+	gzip --best $(MAN)/$(MANPAGE3)
 
 # Run "sudo make uninstall" to uninstall
 # Uninstall from $(BIN) and man page from $(MAN)
@@ -36,9 +39,9 @@ uninstall:
 	rm -f $(BIN)/$(TARGET1)
 	rm -f $(BIN)/$(TARGET2)
 	rm -f $(BIN)/$(TARGET3)
-	rm -f $(MAN)/$(MANPAGE1)
-	rm -f $(MAN)/$(MANPAGE2)
-	rm -f $(MAN)/$(MANPAGE3)
+	rm -f $(MAN)/$(MANPAGE1).gz
+	rm -f $(MAN)/$(MANPAGE2).gz
+	rm -f $(MAN)/$(MANPAGE3).gz
 
 # Remove backup files
 clean:
