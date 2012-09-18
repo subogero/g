@@ -1,0 +1,22 @@
+#!/bin/sh
+SLEEP=`echo $1 | egrep '^[1-9][0-9]*$'`
+[ -z "$SLEEP" ] && SLEEP=300
+# Try .netrc for google credentials
+CRED=`sed -rn 's/^.+google\.com +login +([^ ]+) +password +([^ ]+)$/\1:\2/p' ~/.netrc`
+# Or try .muttrc
+if [ -z "$CRED" ]; then
+  CRED=`sed -rn 's/^set imap_user i*= *"(.+)"$/\1/p' ~/.muttrc`
+  CRED=$CRED:`sed -rn 's/^set imap_pass *= *"(.+)"$/\1/p' ~/.muttrc`
+fi
+# Exit if no CRED found
+if [ -z "$CRED" ]; then
+  echo >&2 'No google.com credentials found in .netrc or .muttrc'
+  exit 1
+fi
+# Read the Google atom feed about new mails
+while true; do
+  EMAILS=`curl -u $CRED https://mail.google.com/mail/feed/atom 2>/dev/null \
+  | sed -rn 's/<name>(.+)<\/name>$/\1/p'`
+  [ -n "$EMAILS" ] && notify-send "NEW EMAIL" "$EMAILS"
+  sleep $SLEEP
+done
