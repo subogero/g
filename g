@@ -22,13 +22,13 @@ if [ $# -eq 0 ]; then
 
 ### Display usage ############################################################
 elif [ "$1" = "-h" ]; then
-  echo 'Usage: go [-h] | [URL] | [command [options]]'
+  echo 'Usage: g [-h] | [URL] | [command [options]]'
   echo
-  echo 'go           opens a new detached terminal window'
-  echo 'go -h        shows usage (this text) and exits'
-  echo 'go -g <text> Google search for text in your preferred browser'
-  echo 'go <URL>     opens URL with the preferred app in a new window'
-  echo 'go <command> runs the command in a new window';
+  echo 'g           opens a new detached terminal window'
+  echo 'g -h        shows usage (this text) and exits'
+  echo 'g -g <text> Google search for text in your preferred browser'
+  echo 'g <URL>     opens URL with the preferred app in a new window'
+  echo 'g <command> runs the command in a new window';
 
 ### Argument is Google search ################################################
 elif [ "$1" = "-g" ]; then
