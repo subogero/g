@@ -1,7 +1,9 @@
 A collection of goodies for the Gnome2 desktop and its relations.
+g is a universal command-line launcher.
+tapeta is a simple wallpaper slideshow program.
+notgmail provides desktop notifications for new email on Gmail.
 
-g is a universal command-line launcher for GNOME.
-Much like gnome-open, but it can launch programs as well.
+g is much like gnome-open, but it can launch programs as well.
 Always in a new window, always fully detached from your terminal.
 $ g             # launch a new terminal window
 $ g <file>      # open <file> in your preferred application
@@ -9,8 +11,5 @@ $ g <URL>       # open <URL> in your preferred application
 $ g <CLI-prog>  # launch command-line program in a new terminal
 $ g <GUI-prog>  # launch GUI program
 $ g -g <words>  # launch google search for <words> in default browser
-
-tapeta is a simple wallpaper slideshow program.
-notgmail provides desktop notifications for new email on Gmail.
 
 Use both tapeta and notgmail as Startup Applications.
