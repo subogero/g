@@ -14,6 +14,7 @@ if [ -z "$CRED" ]; then
   exit 1
 fi
 # Read the Google atom feed about new mails
+sleep 10 # Wait a little to let desktop session get fully initialized
 while true; do
   EMAILS=`curl -u $CRED https://mail.google.com/mail/feed/atom 2>/dev/null \
   | sed -rn 's/<name>(.+)<\/name>$/\1/p'`
