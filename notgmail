@@ -1,4 +1,8 @@
 #!/bin/sh
+##############################################################################
+# (c) SZABO Gergely, 2012
+# Free software, distributed under the WTFPL license
+##############################################################################
 SLEEP=`echo $1 | egrep '^[1-9][0-9]*$'`
 [ -z "$SLEEP" ] && SLEEP=300
 # Try .netrc for google credentials

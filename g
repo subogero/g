@@ -1,8 +1,7 @@
 #!/bin/sh
 ##############################################################################
 # (c) SZABO Gergely, 2009
-# Free software, distributed under the GNU GPL license
-# There is absolutely no warranty.
+# Free software, distributed under the WTFPL license
 ##############################################################################
 CMDFILE=`which $1` 2>/dev/null
 
