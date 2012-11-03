@@ -6,7 +6,9 @@
 CMDFILE=`which $1` 2>/dev/null
 
 ### Which desktop environment is this? #######################################
-if ps -A | grep '\bmdm\b' >/dev/null; then
+if ps -A | grep '\bkdm\b' >/dev/null; then
+  DE=kde
+elif ps -A | grep '\bmdm\b' >/dev/null; then
   DE=mate
 elif ps -A | grep '\bgdm\b' >/dev/null; then
   DE=gnome
