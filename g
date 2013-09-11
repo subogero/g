@@ -9,7 +9,7 @@ CMDFILE=`which $1` 2>/dev/null
 if ps -A | grep '\bkdm\b' >/dev/null; then
   DE=kde
 elif ps -A | grep '\bmdm\b' >/dev/null; then
-  DE=mate
+  if which mate-terminal; then DE=mate; else DE=gnome; fi
 elif ps -A | grep '\bgdm\b' >/dev/null; then
   DE=gnome
 else
