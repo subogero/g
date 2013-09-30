@@ -24,15 +24,28 @@ fi
 if [ ! -f ~/.tapeta ]; then
   echo t=600 > ~/.tapeta
   echo dir=/home/$USER/Pictures >> ~/.tapeta
+  echo ordered=no >> ~/.tapeta
 fi
 
 # Cycle through pictures
 while true; do
   SLEEP=`sed -rn 's/^t=([0-9]+)$/\1/p' ~/.tapeta`
   DIR=`sed -rn 's/^dir=(.+)$/\1/p' ~/.tapeta`
+  ORDER=`sed -rn 's/^ordered=(.+)$/\1/p' ~/.tapeta`
   [ "$SLEEP" = 0 ] && exit 0
   sleep $SLEEP || exit 1
-  FILE=`ls -1 --file-type "$DIR" | grep '[^/]$' | shuf -n1`
+  if [ "$ORDER" = yes ]; then
+    unset FIRST
+    unset LAST
+    for i in `ls -1 --file-type "$DIR" | grep '[^/]$'`; do
+      [ -z "$FIRST" ] && FIRST="$i"
+      [ "$LAST" ] && FILE="$i" && break
+      [ "$FILE" = "$i" ] && LAST="$i"
+    done
+    [ "$FILE" = "$LAST" -o -z "$LAST" ] && FILE=$FIRST
+  else
+    FILE=`ls -1 --file-type "$DIR" | grep '[^/]$' | shuf -n1`
+  fi
   [ -z "$FILE" ] && continue
   if ps -A | grep '\bmdm\b' >/dev/null; then
     mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$DIR/$FILE"
