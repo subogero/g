@@ -9,7 +9,7 @@ SLEEP=`echo $1 | egrep '^[1-9][0-9]*$'`
 CRED=`sed -rn 's/^.+google\.com +login +([^ ]+) +password +([^ ]+)$/\1:\2/p' ~/.netrc`
 # Or try .muttrc
 if [ -z "$CRED" ]; then
-  CRED=`sed -rn 's/^set imap_user i*= *"(.+)"$/\1/p' ~/.muttrc`
+  CRED=`sed -rn 's/^set imap_user *= *"(.+)"$/\1/p' ~/.muttrc`
   CRED=$CRED:`sed -rn 's/^set imap_pass *= *"(.+)"$/\1/p' ~/.muttrc`
 fi
 # Exit if no CRED found
