@@ -48,7 +48,7 @@ while true; do
   fi
   [ -z "$FILE" ] && continue
   if ps -A | grep '\bmdm\b' >/dev/null; then
-    mateconftool-2 -t string -s /desktop/mate/background/picture_filename "$DIR/$FILE"
+    gsettings set org.mate.background picture-filename "$DIR/$FILE"
   else
     gconftool-2 -t string -s /desktop/gnome/background/picture_filename "$DIR/$FILE"
   fi
