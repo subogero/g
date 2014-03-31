@@ -5,8 +5,9 @@
 ##############################################################################
 if [ "$1" = -h ]; then
 cat <<EOF
-Usage: tapeta [-h]
--h show this help text
+Usage: tapeta [ CMD | -h ]
+-h	show this help text
+CMD	commands start / stop / reload
 
 Tipically, use tapeta as a Startup Application in Gnome/Mate.
 
@@ -19,6 +20,25 @@ and ~/Pictures as the default folder.
 EOF
 exit 0
 fi
+
+case "$1" in
+start)
+  [ -f ~/.tapeta.pid ] || nohup tapeta >/dev/null 2>&1 &
+  exit 0
+  ;;
+reload)
+  kill `cat ~/.tapeta.pid`
+  nohup tapeta >/dev/null 2>&1 &
+  exit 0
+  ;;
+stop)
+  kill `cat ~/.tapeta.pid`
+  rm ~/.tapeta.pid
+  exit 0
+  ;;
+esac
+
+echo $$ > ~/.tapeta.pid
 
 # Create default cnfig file if necessary
 if [ ! -f ~/.tapeta ]; then
