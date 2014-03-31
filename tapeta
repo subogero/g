@@ -30,10 +30,14 @@ fi
 # Cycle through pictures
 while true; do
   SLEEP=`sed -rn 's/^t=([0-9]+)$/\1/p' ~/.tapeta`
-  DIR=`sed -rn 's/^dir=(.+)$/\1/p' ~/.tapeta`
-  ORDER=`sed -rn 's/^ordered=(.+)$/\1/p' ~/.tapeta`
   [ "$SLEEP" = 0 ] && exit 0
   sleep $SLEEP || exit 1
+  ACONLY=`sed -rn 's/^AConly=(.+)$/\1/p' ~/.tapeta`
+  if [ "$ACONLY" = yes ]; then
+     upower -i `upower -e | grep AC`| grep 'online: *yes' >/dev/null || continue
+  fi
+  DIR=`sed -rn 's/^dir=(.+)$/\1/p' ~/.tapeta`
+  ORDER=`sed -rn 's/^ordered=(.+)$/\1/p' ~/.tapeta`
   if [ "$ORDER" = yes ]; then
     unset FIRST
     unset LAST
