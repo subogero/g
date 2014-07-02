@@ -4,10 +4,12 @@ notgmail \- New mail desktop notification for Gmail
 .SH SYNOPSIS
 .B notgmail
 [
+.B -d
+] [
 .B <time>
-] | [
-.B -h
 ]
+.br
+-d debug mode
 .SH DESCRIPTION
 .B Notgmail
 provides new mail desktop notification from Gmail for the
@@ -28,6 +30,12 @@ Your google.com credentials are read from
 .BR "notify-send" " Send desktop notifications from the command line"
 .br
 Note: notify-send is broken in LXDE and Gnome3, and it does not exist in KDE.
+.SH DEPENDENCIES
+notgmail uses
+.B curl
+and
+.B tidy
+to get and process the Gmail Atom-feed.
 .SH AUTHOR
 SZABO Gergely
 .B szg@subogero.com

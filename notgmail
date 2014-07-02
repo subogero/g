@@ -3,25 +3,40 @@
 # (c) SZABO Gergely, 2012
 # Free software, distributed under the WTFPL license
 ##############################################################################
+if [ "$1" = '-d' ]; then
+  debug=1
+  shift
+fi
 SLEEP=`echo $1 | egrep '^[1-9][0-9]*$'`
 [ -z "$SLEEP" ] && SLEEP=300
 # Try .netrc for google credentials
 CRED=`sed -rn 's/^.+google\.com +login +([^ ]+) +password +([^ ]+)$/\1:\2/p' ~/.netrc`
+[ "$debug" ] && echo netrc cred: $CRED
 # Or try .muttrc
 if [ -z "$CRED" ]; then
   CRED=`sed -rn 's/^set imap_user *= *"(.+)"$/\1/p' ~/.muttrc`
   CRED=$CRED:`sed -rn 's/^set imap_pass *= *"(.+)"$/\1/p' ~/.muttrc`
 fi
+[ "$debug" ] && echo muttrc cred: $CRED
 # Exit if no CRED found
 if [ -z "$CRED" ]; then
   echo >&2 'No google.com credentials found in .netrc or .muttrc'
   exit 1
 fi
 # Read the Google atom feed about new mails
-sleep 10 # Wait a little to let desktop session get fully initialized
+[ "$debug" ] || sleep 30 # Wait a little to let desktop session get fully initialized
 while true; do
+  [ "$debug" ] && echo curl -u $CRED https://mail.google.com/mail/feed/atom
+  [ "$debug" ] && curl -u $CRED https://mail.google.com/mail/feed/atom 2>/dev/null \
+                | tidy -xml -i -utf8 2>/dev/null
   EMAILS=`curl -u $CRED https://mail.google.com/mail/feed/atom 2>/dev/null \
+  | tidy -xml -i -utf8 2>/dev/null \
   | sed -rn 's/<name>(.+)<\/name>$/\1/p'`
   [ -n "$EMAILS" ] && notify-send "NEW EMAIL" "$EMAILS"
+  if [ "$debug" ]; then
+    echo notify-send "NEW EMAIL" "$EMAILS"
+    break
+  fi
+# Exit if no CRED found
   sleep $SLEEP
 done
