@@ -6,20 +6,22 @@
 CMDFILE=`which $1` 2>/dev/null
 
 ### Which desktop environment is this? #######################################
-if ps -A | grep '\bkdm\b' >/dev/null; then
-  DE=kde
-elif ps -A | grep '\bmdm\b' >/dev/null; then
-  if which mate-terminal; then DE=mate; else DE=gnome; fi
-elif ps -A | grep '\bgdm\b' >/dev/null; then
-  DE=gnome
-else
+for i in gnome-terminal mate-terminal konsole; do
+  which $i >/dev/null 2>&1 && term=$i && break
+done
+
+for i in gnome-open mate-open kde-open; do
+  which $i >/dev/null 2>&1 && open=$i && break
+done
+
+if [ -z "$term" -o -z "$open" ]; then
   echo Unknown desktop environment 1>&2
   exit 1
 fi
 
 ### No argument, open terminal ###############################################
 if [ $# -eq 0 ]; then
-  $DE-terminal;
+  $term;
 
 ### Display usage ############################################################
 elif [ "$1" = "-h" ]; then
@@ -39,11 +41,11 @@ elif [ "$1" = "-g" ]; then
     QUERY="${QUERY}${WORD}+";
   done
   URL="http://www.google.com/search?q=${QUERY}"
-  $DE-open $URL
+  $open $URL
 
 ### Argument is URL, open ####################################################
 elif [ "$CMDFILE" = "" ]; then
-  $DE-open "$@";
+  $open "$@";
 
 ### Argument is command ######################################################
 else
@@ -67,6 +69,6 @@ else
 
   ### Command seems to be terminal-program ###################################
   else
-    $DE-terminal -t $CMD -e $CMDFILE $@ >/dev/null 2>&1;
+    $term -t $CMD -e $CMDFILE $@ >/dev/null 2>&1;
   fi;
 fi
